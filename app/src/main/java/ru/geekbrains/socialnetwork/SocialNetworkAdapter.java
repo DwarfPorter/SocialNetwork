@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,9 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdapter.ViewHolder> {
 
-    private final String[] dataSource;
+    private final SocSource dataSource;
+    private OnItemClickListener itemClickListener;
 
-    public SocialNetworkAdapter(String[] dataSource) {
+    public SocialNetworkAdapter(SocSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -27,25 +30,53 @@ public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.getTextView().setText(dataSource[position]);
+        Soc soc = dataSource.getSoc(position);
+        holder.setData(soc.getDescription(), soc.getPicture(), soc.isLike());
     }
 
     @Override
     public int getItemCount() {
-        return dataSource.length;
+        return dataSource.size();
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(View view, int position);
+    }
+
+    public void SetOnItemClickListener(OnItemClickListener itemClickListener){
+        this.itemClickListener = itemClickListener;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView textView;
+        private TextView description;
+        private ImageView image;
+        private CheckBox like;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = (TextView) itemView;
+
+            description = itemView.findViewById(R.id.description);
+            image = itemView.findViewById(R.id.imageView);
+            like = itemView.findViewById(R.id.like);
         }
 
-        public TextView getTextView() {
-            return textView;
+        public void setData(String description, int picture, boolean like){
+            getDescription().setText(description);
+            getImage().setImageResource(picture);
+            getLike().setChecked(like);
+        }
+
+        public TextView getDescription() {
+            return description;
+        }
+
+        public ImageView getImage() {
+            return image;
+        }
+
+        public CheckBox getLike() {
+            return like;
         }
     }
 }

@@ -5,6 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,11 +16,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String[] data = getResources().getStringArray(R.array.items);
-        initRecyclerView(data);
+        SocSource sourceData = new SocSource(getResources());
+        initRecyclerView(sourceData.build());
     }
 
-    private void initRecyclerView(String[] data)
+    private void initRecyclerView(SocSource data)
     {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -27,5 +30,12 @@ public class MainActivity extends AppCompatActivity {
 
         SocialNetworkAdapter socnetAdapter = new SocialNetworkAdapter(data);
         recyclerView.setAdapter(socnetAdapter);
+
+        socnetAdapter.SetOnItemClickListener(new SocialNetworkAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(MainActivity.this, String.format("%s - %d", ((TextView)view).getText(), position), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
