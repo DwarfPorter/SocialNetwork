@@ -31,6 +31,6 @@ public class SocChangeSource implements SocChangableSource {
 
     @Override
     public int size() {
-        return dataSource.size();
+        return count;
     }
 }
