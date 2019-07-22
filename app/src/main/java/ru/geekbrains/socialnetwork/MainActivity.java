@@ -1,6 +1,7 @@
 package ru.geekbrains.socialnetwork;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 socChangableSource.add();
-                adapter.notifyDataSetChanged();
+                adapter.notifyItemInserted(socChangableSource.size());
             }
         });
 
@@ -41,9 +42,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 socChangableSource.delete();
-                adapter.notifyDataSetChanged();
+                adapter.notifyItemRemoved(socChangableSource.size());
             }
         });
+
+
     }
 
     private SocialNetworkAdapter initRecyclerView(SocSourceData data)
@@ -67,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, String.format("Позиция - %d", position), Toast.LENGTH_SHORT).show();
             }
         });
+
+        DefaultItemAnimator animator = new DefaultItemAnimator();
+        animator.setAddDuration(500);
+        animator.setRemoveDuration(500);
+        recyclerView.setItemAnimator(animator);
 
         return socnetAdapter;
     }
