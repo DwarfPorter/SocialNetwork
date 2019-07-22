@@ -25,7 +25,11 @@ public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdap
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item, parent, false);
-        return new ViewHolder(v);
+        ViewHolder viewHolder = new ViewHolder(v);
+        if (itemClickListener != null){
+            viewHolder.setOnClickListener(itemClickListener);
+        }
+        return viewHolder;
     }
 
     @Override
@@ -59,6 +63,17 @@ public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdap
             description = itemView.findViewById(R.id.description);
             image = itemView.findViewById(R.id.imageView);
             like = itemView.findViewById(R.id.like);
+        }
+
+        public void setOnClickListener(final OnItemClickListener listener){
+            image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int adapterPosition = getAdapterPosition();
+                    if (adapterPosition == RecyclerView.NO_POSITION) return;
+                    listener.onItemClick(view, adapterPosition);
+                }
+            });
         }
 
         public void setData(String description, int picture, boolean like){

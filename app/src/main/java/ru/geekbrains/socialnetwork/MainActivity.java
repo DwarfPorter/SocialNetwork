@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         socnetAdapter.SetOnItemClickListener(new SocialNetworkAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(MainActivity.this, String.format("%s - %d", ((TextView)view).getText(), position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, String.format("Позиция - %d", position), Toast.LENGTH_SHORT).show();
             }
         });
     }
