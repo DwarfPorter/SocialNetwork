@@ -1,6 +1,7 @@
 package ru.geekbrains.socialnetwork;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
 
         SocialNetworkAdapter socnetAdapter = new SocialNetworkAdapter(data);
         recyclerView.setAdapter(socnetAdapter);
+
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
+        itemDecoration.setDrawable(getDrawable(R.drawable.separator));
+        recyclerView.addItemDecoration(itemDecoration);
 
         socnetAdapter.SetOnItemClickListener(new SocialNetworkAdapter.OnItemClickListener() {
             @Override
