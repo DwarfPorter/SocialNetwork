@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,10 +21,32 @@ public class MainActivity extends AppCompatActivity {
         SocSourceData sourceData = new SocSourceBuilder()
                 .setResources(getResources())
                 .build();
-        initRecyclerView(sourceData);
+
+        final SocChangableSource socChangableSource = new SocChangeSource(sourceData);
+
+
+        final SocialNetworkAdapter adapter = initRecyclerView(socChangableSource);
+
+        Button add = findViewById(R.id.buttonAdd);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                socChangableSource.add();
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        Button del = findViewById(R.id.buttonDel);
+        del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                socChangableSource.delete();
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
-    private void initRecyclerView(SocSourceData data)
+    private SocialNetworkAdapter initRecyclerView(SocSourceData data)
     {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -44,5 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, String.format("Позиция - %d", position), Toast.LENGTH_SHORT).show();
             }
         });
+
+        return socnetAdapter;
     }
 }
