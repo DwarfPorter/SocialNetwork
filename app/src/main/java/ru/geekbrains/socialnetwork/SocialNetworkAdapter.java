@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdapter.ViewHolder> {
 
-    private final SocSource dataSource;
+    private final SocSourceData dataSource;
     private OnItemClickListener itemClickListener;
 
-    public SocialNetworkAdapter(SocSource dataSource) {
+    public SocialNetworkAdapter(SocSourceData dataSource) {
         this.dataSource = dataSource;
     }
 

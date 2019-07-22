@@ -17,11 +17,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SocSource sourceData = new SocSource(getResources());
-        initRecyclerView(sourceData.build());
+        SocSourceData sourceData = new SocSourceBuilder()
+                .setResources(getResources())
+                .build();
+        initRecyclerView(sourceData);
     }
 
-    private void initRecyclerView(SocSource data)
+    private void initRecyclerView(SocSourceData data)
     {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);

@@ -6,7 +6,7 @@ import android.content.res.TypedArray;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SocSource {
+public class SocSource implements SocSourceData {
     private List<Soc> dataSource;
     private Resources resources;
 
@@ -15,7 +15,7 @@ public class SocSource {
         dataSource = new ArrayList<Soc>(7);
     }
 
-    public SocSource build() {
+    public SocSource init() {
         String[] description = resources.getStringArray(R.array.descriptions);
         int[] pictures = getImageArray();
         for (int i = 0; i < description.length; i++){
